@@ -42,5 +42,40 @@ def log_error(e):
     print(e)
 
 
-simple_get(catch_link)
+simple_get(welter_link)
+
+def get_all_html(url):
+    """
+    Get all HTML data
+    """
+
+    response = simple_get(url)
+
+    if response is not None:
+        html = BeautifulSoup(response, 'html.parser')
+        return print(html)
+
+    # Raise an exception if we failed to get any data from the url
+    raise Exception('Error retrieving contents at {}'.format(url))
+
+# get_all_html(welter_link)
+
+def get_fighters(url):
+    """
+    Get all HTML data
+    """
+
+    response = simple_get(url)
+
+    if response is not None:
+        html = BeautifulSoup(response, 'html.parser')
+        html_table = html.find_all('table')
+        # for fighter in html.find_all('div', class_ = 'odd')
+        print(html_table[1])
+    else:
+
+        # Raise an exception if we failed to get any data from the url
+        raise Exception('Error retrieving contents at {}'.format(url))
+
+get_fighters(welter_link)
 
