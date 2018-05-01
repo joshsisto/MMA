@@ -69,16 +69,30 @@ def get_fighters(url):
 
     if response is not None:
         html = BeautifulSoup(response, 'html.parser')
-        html_table = html.find_all('tr')
+        html_tr = html.find_all('tr')
+        html_td = html.find_all('td')
         # for fighter in html.find_all('div', class_ = 'odd')
-        print(html_table)
-        print(type(html_table))
+        # print(html_tr)
+        # print(html_td)
+        print(len(html_tr))
+        # print(type(html_td))
     else:
 
         # Raise an exception if we failed to get any data from the url
         raise Exception('Error retrieving contents at {}'.format(url))
 
-    # for row in html_table.find_all('tr')
 
-get_fighters(welter_link)
+    # for line in html_tr:
+    #     print(line)
+
+    for num in range(len(html_tr)):
+        for line in html_tr[num]:
+            print(line)
+
+
+get_fighters(heavy_link)
+
+
+
+
 
