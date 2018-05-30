@@ -86,25 +86,9 @@ def get_fighters(url):
     print(html_tr[3])
     print(type(html_tr[3]))
 
-    # for line in html_tr:
-    #     print(line)
-
-    # for num in range(len(html_tr)):
-        # print(num)
-        # for line in html_tr[num]:
-        #     print(line)
-
-
-#https://gist.github.com/phillipsm/0ed98b2585f0ada5a769
-
-
 #get_fighters(heavy_link)
 
-
-
-
-
-def get_fighter_two(url):
+def get_fighter_list(url):
     url_to_scrape = url
     r = get(url_to_scrape)
     # print(r)
@@ -116,18 +100,12 @@ def get_fighter_two(url):
         cell_link = table_row.findAll('a')
 
         if len(cells) > 0:
-            cell_zero = cells[0].text.strip()
             cell_one = cells[1].text.strip()
-            cell_two = cells[2].text.strip()
-            cell_three = cells[3].text.strip()
-            cell_four = cells[4].text.strip()
-            fighter = {'Fighter': cell_zero, 'Nickname': cell_one, 'Height': cell_two, 'Weight': cell_three, 'Association': cell_four, 'Fighter_Link': cell_link}
+            fighter = [cell_one, cell_link]
             fighter_list.append(fighter)
 
-            print("Added {0}, {1}, {2}, {3}, {4}, {5}, to the list".format(cell_zero, cell_one, cell_two, cell_three, cell_four, cell_link))
+            print("Added {0}, {1}, to the list".format(cell_one, cell_link))
 
-    print(type(fighter_list))
-    print(fighter_list)
-    print(type(fighter_list[5]))
 
-get_fighter_two(l_heavy_link)
+get_fighter_list(l_heavy_link)
+
