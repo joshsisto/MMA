@@ -8,7 +8,7 @@ from sherdog_links import *
 
 # Let's put the URL of the page we want to scrape in a variable
 # so that our code down below can be a little cleaner
-url_to_scrape = welter_link
+url_to_scrape = heavy_link
 
 # Tell requests to retreive the contents our page (it'll be grabbing
 # what you see when you use the View Source feature in your browser)
@@ -61,6 +61,7 @@ for table_row in soup.select("table.fightfinder_result tr"):
         # Let's print our table out.
         print("Added {0} {1}, {2}, {3}, {4}, {5}, to the list".format(cell_zero, cell_one, cell_two, cell_three, cell_four, cell_link))
 
+print(type(fighter_list))
 print(fighter_list)
 #
 # # What if we want to do more than just print out all the names and
