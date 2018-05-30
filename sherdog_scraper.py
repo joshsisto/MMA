@@ -3,7 +3,7 @@ from requests.exceptions import RequestException
 from contextlib import closing
 from bs4 import BeautifulSoup
 
-from sherdog_links import *
+from ufc_links import *
 
 
 #https://realpython.com/python-web-scraping-practical-introduction/
@@ -88,24 +88,30 @@ def get_fighters(url):
 
 #get_fighters(heavy_link)
 
+
+
 def get_fighter_list(url):
-    url_to_scrape = url
-    r = get(url_to_scrape)
-    # print(r)
+    r = get(url)
     soup = BeautifulSoup(r.text, "html.parser")
-    # print(soup)
     fighter_list = []
-    for table_row in soup.select("table.fightfinder_result tr"):
-        cells = table_row.findAll('td')
+    for table_row in soup.select("table.fighter-listing tr"):
         cell_link = table_row.findAll('a')
+        for link in cell_link:
+            fighter = (str(link).split())
+            fighter_list.append(fighter[2])
 
-        if len(cells) > 0:
-            cell_one = cells[1].text.strip()
-            fighter = [cell_one, cell_link]
-            fighter_list.append(fighter)
+            # print("Added {0}, to the list".format(fighter))
+    print(fighter_list)
+    page_list = []
+    for table_row in soup.select("ul.pagination li"):
+        page_link = table_row.findAll('a')
+        for link in page_link:
+            pages = (str(link).split())
+            page_list.append(pages[2])
+    print(page_list)
 
-            print("Added {0}, {1}, to the list".format(cell_one, cell_link))
+get_fighter_list(lightweight)
 
 
-get_fighter_list(l_heavy_link)
+
 
