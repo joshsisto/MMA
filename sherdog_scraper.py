@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 
 from sherdog_links import *
 
+
+#https://realpython.com/python-web-scraping-practical-introduction/
 def simple_get(url):
     """
     Attempts to get the content at `url` by making an HTTP GET request.
@@ -42,7 +44,7 @@ def log_error(e):
     print(e)
 
 
-simple_get(welter_link)
+# simple_get(catch_link)
 
 def get_all_html(url):
     """
@@ -62,7 +64,7 @@ def get_all_html(url):
 
 def get_fighters(url):
     """
-    Get all HTML data
+    Scrape fighter data
     """
 
     response = simple_get(url)
@@ -70,7 +72,7 @@ def get_fighters(url):
     if response is not None:
         html = BeautifulSoup(response, 'html.parser')
         html_tr = html.find_all('tr')
-        html_td = html.find_all('td')
+        # html_td = html.find_all('td')
         # for fighter in html.find_all('div', class_ = 'odd')
         # print(html_tr)
         # print(html_td)
@@ -81,13 +83,19 @@ def get_fighters(url):
         # Raise an exception if we failed to get any data from the url
         raise Exception('Error retrieving contents at {}'.format(url))
 
+    print(html_tr[3])
+    print(type(html_tr[3]))
 
     # for line in html_tr:
     #     print(line)
 
-    for num in range(len(html_tr)):
-        for line in html_tr[num]:
-            print(line)
+    # for num in range(len(html_tr)):
+        # print(num)
+        # for line in html_tr[num]:
+        #     print(line)
+
+
+#https://gist.github.com/phillipsm/0ed98b2585f0ada5a769
 
 
 get_fighters(heavy_link)
