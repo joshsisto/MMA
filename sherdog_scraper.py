@@ -98,9 +98,36 @@ def get_fighters(url):
 #https://gist.github.com/phillipsm/0ed98b2585f0ada5a769
 
 
-get_fighters(heavy_link)
+#get_fighters(heavy_link)
 
 
 
 
 
+def get_fighter_two(url):
+    url_to_scrape = url
+    r = get(url_to_scrape)
+    # print(r)
+    soup = BeautifulSoup(r.text, "html.parser")
+    # print(soup)
+    fighter_list = []
+    for table_row in soup.select("table.fightfinder_result tr"):
+        cells = table_row.findAll('td')
+        cell_link = table_row.findAll('a')
+
+        if len(cells) > 0:
+            cell_zero = cells[0].text.strip()
+            cell_one = cells[1].text.strip()
+            cell_two = cells[2].text.strip()
+            cell_three = cells[3].text.strip()
+            cell_four = cells[4].text.strip()
+            fighter = {'Fighter': cell_zero, 'Nickname': cell_one, 'Height': cell_two, 'Weight': cell_three, 'Association': cell_four, 'Fighter_Link': cell_link}
+            fighter_list.append(fighter)
+
+            print("Added {0}, {1}, {2}, {3}, {4}, {5}, to the list".format(cell_zero, cell_one, cell_two, cell_three, cell_four, cell_link))
+
+    print(type(fighter_list))
+    print(fighter_list)
+    print(type(fighter_list[5]))
+
+get_fighter_two(l_heavy_link)
