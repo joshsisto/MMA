@@ -127,7 +127,7 @@ full_list = []
 #         time.sleep(5)
 
 
-test_link = r"http://www.ufc.com/fighter/danny-Abbadi"
+test_link = r"http://www.ufc.com/fighter/junior-Albini#"
 
 m = re.search("([^/]+)$", test_link).group(0)
 print(m.upper().replace("-", " "))
@@ -137,10 +137,20 @@ def get_fighter_stats(url):
     soup = BeautifulSoup(r.text, "html.parser")
     fighter_stats = []
     for table_row in soup.select("div.fighter-info tr"):
-        cells = table_row.findAll('td')
-        for data in cells:
-            fighter_stats.append(data)
+        fighter_info = table_row.findAll('td')
+        for data in fighter_info:
+            f_data = (str(data).split())
+            fighter_stats.append(f_data)
+            # print(f_data)
+    # print(fighter_stats)
+
+    for table_row in soup.select("table.fights-table tr"):
+        fighter_info_exp = table_row.findAll('td')
+        for data in fighter_info_exp:
+            f_data = (str(data).split())
+            fighter_stats.append(f_data)
     print(fighter_stats)
+
 
 get_fighter_stats(test_link)
 
