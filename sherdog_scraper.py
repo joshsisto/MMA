@@ -100,14 +100,15 @@ def get_fighter_list(url):
     for table_row in soup.select("table.fighter-listing tr"):
         cell_link = table_row.findAll('a')
         for link in cell_link:
-            fighter = (str(link).split())
-            fighter_list.append(fighter[2])
+            # print(link.get('href'))     # <- if we use this solution we don't have to do the formatting below
+            # fighter = (str(link).split())
+            fighter_list.append(link.get('href'))
 
     fighter_links = []
     for fighter in fighter_list:
-        fighter = fighter[6:-2]
+    #     fighter = fighter[6:-2]
         fighter_links.append(f"http://www.ufc.com{fighter}")
-    # print(fighter_links)
+    print(fighter_links)
     # print(len(fighter_links))
     return fighter_links
 
@@ -127,7 +128,7 @@ full_list = []
 #         time.sleep(5)
 
 
-test_link = r"http://www.ufc.com/fighter/junior-Albini#"
+test_link = r"http://www.ufc.com/fighter/Rafael-Dos-Anjos"
 
 m = re.search("([^/]+)$", test_link).group(0)
 print(m.upper().replace("-", " "))
@@ -136,21 +137,27 @@ def get_fighter_stats(url):
     r = get(url)
     soup = BeautifulSoup(r.text, "html.parser")
     fighter_stats = []
-    for table_row in soup.select("div.fighter-info tr"):
-        fighter_info = table_row.findAll('td')
-        for data in fighter_info:
-            f_data = (str(data).split())
-            fighter_stats.append(f_data)
+    # for table_row in soup.select("div.fighter-info tr"):
+    #     fighter_info = table_row.findAll('td')
+    #     for data in fighter_info:
+    #         f_data = (str(data).strip('\n\t'))
+    #         fighter_stats.append(f_data)
             # print(f_data)
     # print(fighter_stats)
 
-    for table_row in soup.select("table.fights-table tr"):
-        fighter_info_exp = table_row.findAll('td')
-        for data in fighter_info_exp:
-            f_data = (str(data).split())
-            fighter_stats.append(f_data)
-    print(fighter_stats)
+    table_data = soup.select('table.fights-table tr')
+    print(table_data)
+    # for table_row in soup.select("table.fights-table td"):
+    #     fighter_info_exp = table_row.find(id='fighter-from')
+    #     print(fighter_info_exp)
+        # for data in fighter_info_exp:
+        #     f_data = (str(data).strip('\n\t'))
+        #     fighter_stats.append(data)
+    # print(fighter_stats)
 
 
 get_fighter_stats(test_link)
+
+
+
 
