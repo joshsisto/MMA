@@ -4,6 +4,7 @@ from contextlib import closing
 from bs4 import BeautifulSoup
 
 import time
+import re
 
 from ufc_links import *
 
@@ -113,17 +114,33 @@ def get_fighter_list(url):
 # get_fighter_list(the_ufc_link)
 
 full_list = []
-with open("ufc_links.txt") as f:
-    content = f.readlines()
-    # print(content)
-    for link in content:
-        full_list.append(get_fighter_list(link))
-        ff = open("fighter_links.txt", "a+")
-        ff.write(str(get_fighter_list(link)))
-        ff.close()
-        # print(link.strip("\n"))
-        print(full_list)
-        time.sleep(5)
+# with open("ufc_links.txt") as f:
+#     content = f.readlines()
+#     # print(content)
+#     for link in content:
+#         full_list.append(get_fighter_list(link))
+#         ff = open("fighter_links.txt", "a+")
+#         ff.write(str(get_fighter_list(link)))
+#         ff.close()
+#         # print(link.strip("\n"))
+#         print(full_list)
+#         time.sleep(5)
 
 
+test_link = r"http://www.ufc.com/fighter/danny-Abbadi"
+
+m = re.search("([^/]+)$", test_link).group(0)
+print(m.upper().replace("-", " "))
+
+def get_fighter_stats(url):
+    r = get(url)
+    soup = BeautifulSoup(r.text, "html.parser")
+    fighter_stats = []
+    for table_row in soup.select("div.fighter-info tr"):
+        cells = table_row.findAll('td')
+        for data in cells:
+            fighter_stats.append(data)
+    print(fighter_stats)
+
+get_fighter_stats(test_link)
 
