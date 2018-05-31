@@ -106,18 +106,24 @@ def get_fighter_list(url):
     for fighter in fighter_list:
         fighter = fighter[6:-2]
         fighter_links.append(f"http://www.ufc.com{fighter}")
-    print(fighter_links)
-    print(len(fighter_links))
+    # print(fighter_links)
+    # print(len(fighter_links))
+    return fighter_links
 
 # get_fighter_list(the_ufc_link)
 
-
+full_list = []
 with open("ufc_links.txt") as f:
     content = f.readlines()
     # print(content)
     for link in content:
-        get_fighter_list(link)
-        print(link.strip("\n"))
+        full_list.append(get_fighter_list(link))
+        ff = open("fighter_links.txt", "a+")
+        ff.write(str(get_fighter_list(link)))
+        ff.close()
+        # print(link.strip("\n"))
+        print(full_list)
         time.sleep(5)
+
 
 
