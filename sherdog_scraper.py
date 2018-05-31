@@ -3,8 +3,12 @@ from requests.exceptions import RequestException
 from contextlib import closing
 from bs4 import BeautifulSoup
 
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+
 import time
 import re
+import os
 
 from ufc_links import *
 
@@ -145,7 +149,7 @@ def get_fighter_stats(url):
             # print(f_data)
     # print(fighter_stats)
 
-    table_data = soup.select('table.fights-table tr')
+    table_data = soup.select('table.fights-table')
     print(table_data)
     # for table_row in soup.select("table.fights-table td"):
     #     fighter_info_exp = table_row.find(id='fighter-from')
@@ -156,8 +160,20 @@ def get_fighter_stats(url):
     # print(fighter_stats)
 
 
-get_fighter_stats(test_link)
+# get_fighter_stats(test_link)
 
+#https://medium.freecodecamp.org/better-web-scraping-in-python-with-selenium-beautiful-soup-and-pandas-d6390592e251
+#https://github.com/mozilla/geckodriver/releases
+#C:\Windows\System32
+url = r"http://www.ufc.com/fighter/Colby-Covington"
 
+# create a new Firefox session
+driver = webdriver.Firefox()
+driver.implicitly_wait(30)
+driver.get(url)
+
+#After opening the url above, Selenium clicks the expand button
+# python_button = driver.find_element_by_id('MainContent_uxLevel1_Agencies_uxAgencyBtn_33') #FHSU
+# python_button.click() #click fhsu link
 
 
