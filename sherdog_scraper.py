@@ -3,6 +3,8 @@ from requests.exceptions import RequestException
 from contextlib import closing
 from bs4 import BeautifulSoup
 
+import time
+
 from ufc_links import *
 
 
@@ -100,18 +102,22 @@ def get_fighter_list(url):
             fighter = (str(link).split())
             fighter_list.append(fighter[2])
 
-            # print("Added {0}, to the list".format(fighter))
-    print(fighter_list)
-    page_list = []
-    for table_row in soup.select("ul.pagination li"):
-        page_link = table_row.findAll('a')
-        for link in page_link:
-            pages = (str(link).split())
-            page_list.append(pages[2])
-    print(page_list)
+    fighter_links = []
+    for fighter in fighter_list:
+        fighter = fighter[6:-2]
+        fighter_links.append(f"http://www.ufc.com{fighter}")
+    print(fighter_links)
+    print(len(fighter_links))
 
-get_fighter_list(lightweight)
+# get_fighter_list(the_ufc_link)
 
 
+with open("ufc_links.txt") as f:
+    content = f.readlines()
+    # print(content)
+    for link in content:
+        get_fighter_list(link)
+        print(link.strip("\n"))
+        time.sleep(5)
 
 
